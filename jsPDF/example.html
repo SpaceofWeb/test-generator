@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		@media print {
+			.page-break {
+				display: block;
+				page-break-before: always;
+			}
+		}
+
+		body {
+			width: 595px;
+			height: 842px;
+		}
+
+		h1, p {
+			word-wrap: break-word;
+		}
+		h1 {
+			text-align: center;
+		}
+
+		div {
+			margin-bottom: 30px;
+		}
+
+		div > .q {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+
+<div>
+
+<h1>Lorem ipsum dolor sit amet.</h1>
+<h1>num 5</h1>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+</div>
+
+<div class="page-break"></div>
+
+<div>
+
+<h1>Lorem ipsum dolor sit amet.</h1>
+<h1>num 5</h1>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+<div class="block">
+	<p class="q">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam labore eos illum. Tempore praesentium omnis esse tempora asperiores dolorum consequatur!</p>
+
+	<p class="a">A) lorem</p>
+	<p class="a">B) lorem</p>
+	<p class="a">C) lorem</p>
+</div>
+
+</div>
+
+
+<script src="jszip.min.js"></script>
+<script src="FileSaver.min.js"></script>
+<script>
+
+var zip = new JSZip();
+zip.file("Hello.txt", "Hello World\n");
+var img = zip.folder("images");
+zip.generateAsync({type:"blob"})
+.then(function(content) {
+    // see FileSaver.js
+    saveAs(content, "example.zip");
+});
+
+</script>
+
+</body>
+</html>
