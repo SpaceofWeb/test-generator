@@ -10,6 +10,7 @@ export default new Vuex.Store({
     tests: [],
     title: d.shift().testTitle,
     data: d,
+    editTest: [] 
   },
   getters:{
     getTestsTitle: state => {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     getQuestions: state => {
       return state.data;
+    },
+    getEditTest: state =>{
+      return state.editTest;
     }
   },
   mutations: {
@@ -40,6 +44,12 @@ export default new Vuex.Store({
       let {titleTest, questions} = payload;
       state.title = titleTest;
       state.data = questions;
+    },
+    editTestMUT(state, payload){
+      state.editTest = payload;
+    },
+    editClear(state){
+      state.editTest = [];
     }
   },
   actions: {
@@ -50,6 +60,10 @@ export default new Vuex.Store({
     selectTestACT(context, payload){
       // console.log(payload);
       context.commit('selectTestMUT', payload);
+    },
+    editTestACT(context, payload){
+      // console.log(payload);
+      context.commit('editTestMUT', payload);
     }
   }
 })

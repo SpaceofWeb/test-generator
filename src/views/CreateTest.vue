@@ -33,6 +33,9 @@
 // @ is an alias to /src
 import Question from '@/components/Question.vue'
 import {mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
+import {mapMutations} from 'vuex'
+import { log } from 'util'
 
 export default {
   name: 'CreateTest',
@@ -69,7 +72,7 @@ export default {
     },
       // Field
     inputAnswersField(payload){
-      console.log(payload);
+      // console.log(payload);
       let {value, index, ansIndex} = payload;
       this.questions[index].answers[ansIndex].title = value;
     },
@@ -105,7 +108,25 @@ export default {
     saveTest(){
       this.$store.dispatch('saveTestACT', { titleTest: this.titleTest, questions: this.questions });
       this.$router.push('/view');
+    },
+    ...mapMutations([
+      'editClear'
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      'getEditTest'
+    ])
+  },
+  created(){
+    if(Object.entries(this.getEditTest).length > 0){
+      let {titleTest, questions} = this.getEditTest;
+      this.titleTest = titleTest;
+      this.questions = questions;
+      this.$store.commit('editClear');
     }
+    // console.log(`Edit = ${this.getEditTest}`);
+    // console.log(Object.entries(this.getEditTest).length > 0);
   }
 }
 </script>
@@ -116,5 +137,8 @@ export default {
  }
  .title-test{
    padding-top: 50px;
+ }
+ .create-test{
+   padding-bottom: 100px;
  }
  </style>

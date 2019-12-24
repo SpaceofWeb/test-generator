@@ -6,15 +6,21 @@
     </div>       
       <b-container>
     <b-list-group v-if="lenTest">
-        <b-list-group-item href="#" v-for="(test, ind) in getTests" :key="ind" 
-          @click="view(test)"
-          class="d-flex test-item justify-content-between align-items-center">
-            <p class="text-left m-0">
-              <span class="title-test" >{{test.titleTest}}</span><br>
-            </p>
-            <b-badge class="countQuestions" variant="primary" pill>Кол-во вопросов: {{test.questions.length}}</b-badge>
-           <!-- <b-badge class="deleteBtn" variant="danger" @click="deleteTest(test)">-</b-badge> -->
+      <!-- li -->
+        <b-list-group-item 
+            v-for="(test, index) in getTests" 
+            :key="index"
+            class="d-flex list-item justify-content-between align-items-center">
+          <div class="title-item d-flex align-items-center w-100" @click="view(test)">
+            <div class="title-test">{{test.titleTest}}</div>
+            <b-badge class="ml-auto" variant="primary" pill>Кол-во вопросов: {{test.questions.length}}</b-badge>    
+          </div>
+          <b-button-group class="btn-group">
+            <b-button variant="danger" class="del" @click="deleteTest(test)">-</b-button>
+            <b-button variant="warning" class="del" @click="edit(test)">✎</b-button>
+          </b-button-group>
         </b-list-group-item>
+        <!--/ li -->
     </b-list-group>
     <b-alert v-else show variant="info">
       <h4>У вас нет готовых тестов</h4>
@@ -52,7 +58,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'selectTestACT'
+      'selectTestACT',
+      'editTestACT'
     ]),
     view(test){
       // console.log(test);
@@ -60,17 +67,29 @@ export default {
       this.$router.push('/view');
     },
     deleteTest(test){
+      // console.log(test);
+      localStorage.removeItem(test.titleTest);  
+      this.getLocalStorage();
+    },
+    edit(test){
+      // console.log("edit");
+      this.$store.dispatch('editTestACT', { titleTest: test.titleTest, questions: test.questions });
+      this.$router.push('/create');
+    },
+    getLocalStorage(){
+      this.tests = [];
+      let keys = Object.keys(localStorage);
+      for(let key = 0; key < keys.length; key++) {
+        if(keys[key] == 'loglevel:webpack-dev-server') continue;
+        this.tests.push({
+          titleTest: keys[key],
+          questions: JSON.parse(localStorage.getItem(keys[key]))
+        });
+      }
     }
   },
   created(){
-    let keys = Object.keys(localStorage);
-    for(let key = 0; key < keys.length; key++) {
-      if(keys[key] == 'loglevel:webpack-dev-server') continue;
-      this.tests.push({
-        titleTest: keys[key],
-        questions: JSON.parse(localStorage.getItem(keys[key]))
-      });
-    }
+    this.getLocalStorage();
   }
 }
 </script>
@@ -85,5 +104,23 @@ export default {
 }
 .title-test{
   font-weight: bold;
+}
+.del{
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+}
+.list-item{
+  padding: 0;
+  cursor: pointer;
+}
+.list-item:hover{
+  background: #f3f0f0;
+}
+.title-item{
+  padding: .75rem 1.25rem;
+}
+.btn-group{
+  margin-right: 1.25rem;
 }
  </style>
