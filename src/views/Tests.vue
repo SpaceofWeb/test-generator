@@ -5,17 +5,21 @@
         <p>Выберите нужный или создайте новый</p>
     </div>       
       <b-container>
-    <b-list-group>
-        <b-list-group-item href="#" v-for="(test, ind) in getTestsTitle" :key="ind" 
-          @click="view"
+    <b-list-group v-if="lenTest">
+        <b-list-group-item href="#" v-for="(test, ind) in getTests" :key="ind" 
+          @click="view(test)"
           class="d-flex test-item justify-content-between align-items-center">
-            <p style="text-align: left;" class="m-0">
-              <span style="font-weight: bold">{{test}}</span><br>
-              <span style="font-size: 13px;">{{test.data}}</span>
+            <p class="text-left m-0">
+              <span class="title-test" >{{test.titleTest}}</span><br>
             </p>
-            <b-badge variant="primary" pill>Кол-во вопросов: {{countQuestions}}</b-badge>
+            <b-badge class="countQuestions" variant="primary" pill>Кол-во вопросов: {{test.questions.length}}</b-badge>
+           <!-- <b-badge class="deleteBtn" variant="danger" @click="deleteTest(test)">-</b-badge> -->
         </b-list-group-item>
     </b-list-group>
+    <b-alert v-else show variant="info">
+      <h4>У вас нет готовых тестов</h4>
+      <p>Вы можете создать их <router-link to="/create">здесь</router-link></p>
+    </b-alert>
     </b-container>
   </div>
 </template>
@@ -28,28 +32,46 @@ import {mapGetters } from 'vuex';
 export default {
   name: 'tests',
   components: {
-    
   },
   data(){
       return{
+        tests: []
       }
   },
   computed:{
     ...mapGetters([
         'getTestsTitle',
         'countQuestions'
-    ])
+    ]),
+    getTests(){
+      return this.tests;
+    },
+    lenTest(){
+      return this.tests.length > 0;
+    }
   },
   methods: {
     ...mapActions([
-        'ActGetTests'
+      'selectTestACT'
     ]),
-    view(){
+    view(test){
+      console.log(test);
+      this.$store.dispatch('selectTestACT', { titleTest: test.titleTest, questions: test.questions });
       this.$router.push('/view');
+    },
+    deleteTest(test){
+      console.log("AASDASDSAD");
     }
   },
   created(){
-      //  this.$store.dispatch('ActGetTests', 2);
+    let keys = Object.keys(localStorage);
+    for(let key = 0; key < keys.length; key++) {
+      if(keys[key] == 'loglevel:webpack-dev-server') continue;
+      this.tests.push({
+        titleTest: keys[key],
+        questions: JSON.parse(localStorage.getItem(keys[key]))
+      });
+    }
   }
 }
 </script>
@@ -61,5 +83,11 @@ export default {
 }
 .tests-title{
     padding-bottom: 25px;
+}
+.title-test{
+  font-weight: bold;
+}
+.countQuestions{
+  /* margin-right: 40px; */
 }
  </style>

@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tests: [],
-    title: d.shift(),
+    title: d.shift().testTitle,
     data: d,
   },
   getters:{
@@ -23,10 +23,35 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    MutGetTests (state, data) {
-      state.tests = data;
+    saveTestMUT(state, payload){
+      let {titleTest, questions} = payload;
+      state.title = titleTest;
+      state.data = questions;
+      console.log('mut');
+      try {
+        localStorage.setItem(titleTest, JSON.stringify(questions));
+      } catch (e) {
+        if (e == QUOTA_EXCEEDED_ERR) {
+          alert('Превышен лимит');
+        }
+      }
+      console.log(localStorage.length);
+    },
+    selectTestMUT(state, payload){
+      let {titleTest, questions} = payload;
+      state.title = titleTest;
+      state.data = questions;
+      console.log('mut');
     }
   },
   actions: {
+    saveTestACT(context, payload){
+      console.log(payload);
+      context.commit('saveTestMUT', payload);
+    },
+    selectTestACT(context, payload){
+      console.log(payload);
+      context.commit('selectTestMUT', payload);
+    }
   }
 })

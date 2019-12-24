@@ -11,11 +11,11 @@
       <tbody>
         <tr v-for="(row, index) in values[0]" :key="index">
           <!-- {{row}} -->
-          <th scope="row">{{index + 1}}</th>
+          <th scope="row" class="row-count">{{index + 1}}</th>
           <template v-for="(question) in values">
             <td>
               <span v-for="(answer, ansIndex) in question[index].answers" :key="ansIndex">
-                <span class="answer" v-if="answer.isCorrect">({{alphabet[ansIndex]}}) <!--{{answer}}--></span>
+                <span class="answer" v-if="answer.isCorrect">({{String.fromCharCode(65 + ansIndex)}}) <!--{{answer}}--></span>
               </span>
             </td>
           </template>
@@ -39,7 +39,6 @@ export default {
   },
   data(){
     return{
-      alphabet: ['A','B','C','D','E','F','G','H','I','J','K','L']
     }
   },
   computed:{
@@ -85,5 +84,8 @@ th,tr, td{
 .with-answers{
   width: 95%;
   margin: 0 auto;  
+}
+.row-count{
+  width: 50px !important;
 }
  </style>

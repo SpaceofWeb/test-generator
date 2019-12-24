@@ -1,18 +1,19 @@
 <template>
   <div class="test">
     <div class="title">
-        <h3>{{getTestsTitle.testTitle}}</h3>
+        <h3>{{getTestsTitle}}</h3>
         <h4>Вариант {{index+1}}</h4>
-        {{isSaved}}
+        <!-- {{isSaved}} -->
       </div>
       <div class="answers">
         <ul v-for="(question, index) in getQuest" :key="index">
             <div class="question">{{index + 1}}. {{ question.question }}</div>
             <li v-for="(answers, index) in question.answers" :key="index">
-                <div class="answer">{{answers.title}}</div>
+                <div class="answer">{{String.fromCharCode(65 + index)}}) {{answers.title}}</div>
             </li>
         </ul>
       </div>
+    <div class="page-break"></div>
   </div>
 </template>
 
@@ -95,5 +96,10 @@ function shuffle(a) {
 ul,li{
     list-style: none;
 }
-
+@media print {
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+}
  </style>

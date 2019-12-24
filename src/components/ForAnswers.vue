@@ -14,14 +14,14 @@
                 <tr>
                 <th scope="col">#</th>
                 <th v-for="(countMax, indexMax) in getMaxAnswers" :key="indexMax" scope="col">
-                  {{alphabet[indexMax]}}
+                  {{String.fromCharCode(65 + indexMax)}}
                 </th>
                 <th scope="col" style="max-width: 60px;">Для испавлений</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(row, index) in values[0]" :key="index">
-                    <th scope="row">{{index+1}}</th>
+                    <th scope="row" class="row-count">{{index+1}}</th>
                     <td v-for="(answer, ansIndex) of +getMaxAnswers+1" :key="ansIndex">
                     </td>
                 </tr>
@@ -52,8 +52,7 @@ export default {
   },
   data(){
     return{
-      maxAnswers: 0,
-      alphabet: ['A','B','C','D','E','F','G','H','I','J','K','L']
+      maxAnswers: 0
     }
   },
   computed:{
@@ -101,5 +100,8 @@ th,tr, td{
 .for-answers{
   width: 95%;
   margin: 0 auto;  
+}
+.row-count{
+  width: 50px !important;
 }
  </style>

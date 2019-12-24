@@ -17,7 +17,7 @@
             <!-- Answers -->
               <div v-for="(answer, ind) in answers" :key="ind" class="d-flex align-items-center answer">
                 <!-- Check Box -->
-                {{answer.isCorrect}}
+                <!-- {{answer.isCorrect}} -->
                 <b-form-checkbox v-model="answer.isCorrect"/>
                 <!-- <b-form-checkbox :value="answer.isCorrect" v-model="" @change="inputAnswersCheck($event, ind)"/> -->
                 <!-- Field -->
@@ -55,27 +55,19 @@ export default {
   methods: {
     // Textarea
     inputQuestion(value){
-      console.log(value);
       this.$emit('inputQuestion', {value: value, index: this.index});
     },
     // Check Box
     inputAnswersCheck(event, ind){
-      // console.log(event);
-      // console.log(ind);
       // index - component | ansIndex - answer index
-      console.log(event);
       this.$emit('inputAnswersCheck', {value: event, index: this.index, ansIndex: ind});
     },
     // Field
     inputAnswersField(event, ind){
-      console.log(event);
-      console.log(ind);
       // index - component | ansIndex - answer index
       this.$emit('inputAnswersField', {value: event, index: this.index, ansIndex: ind});
     },
     addAnswer(){
-      console.log(this.question);
-      console.log(this.answers);
       this.$emit('addAnswer', {index: this.index});
     },
     deleteAnswer(ind){

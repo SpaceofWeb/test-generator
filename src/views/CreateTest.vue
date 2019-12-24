@@ -1,6 +1,18 @@
 <template>
-  <div class="home">
+  <div class="create-test">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
+    <b-alert show variant="info" class="m-0" >
+        <b-button variant="info" @click="saveTest">Сохранить</b-button>
+    </b-alert>
+
+   <b-col class="m-auto" sm="6">
+     <h2 class="title-test">Название теста</h2>
+      <b-form-textarea
+        v-model="titleTest"
+        placeholder="Введите название теста">
+      </b-form-textarea>
+    </b-col>
+
     <Question 
       v-for="(question, ind) in questions"
       :key="ind" 
@@ -20,14 +32,16 @@
 <script>
 // @ is an alias to /src
 import Question from '@/components/Question.vue'
+import {mapActions} from 'vuex'
 
 export default {
-  name: 'Home',
+  name: 'CreateTest',
   components: {
     Question
   },
   data(){
     return{
+      titleTest: '',
       questions: [
         {
           question: '',
@@ -40,6 +54,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'saveTestACT'
+    ]),
     inputQuestion(payload){
       console.log(payload);
       this.questions[payload.index].question = payload.value;
@@ -86,14 +103,21 @@ export default {
       console.log(ind);
       console.log(this.questions[ind]);
       this.questions.splice(ind, 1);
+    },
+    // Save
+    saveTest(){
+      this.$store.dispatch('saveTestACT', { titleTest: this.titleTest, questions: this.questions });
+      this.$router.push('/view');
     }
   }
 }
 </script>
 
-
  <style scoped>
  .addQuestion{
    margin-top: 30px;
+ }
+ .title-test{
+   padding-top: 50px;
  }
  </style>
