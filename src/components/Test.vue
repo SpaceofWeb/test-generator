@@ -3,6 +3,7 @@
     <div class="title">
         <h3>{{getTestsTitle.testTitle}}</h3>
         <h4>Вариант {{index+1}}</h4>
+        {{isSaved}}
       </div>
       <div class="answers">
         <ul v-for="(question, index) in getQuest" :key="index">
@@ -24,7 +25,8 @@ export default {
   name: 'Test',
   props: {
     index: Number,
-    countQuest: Number
+    countQuest: Number,
+    isSaved: Boolean
   },
   components: {
   },
@@ -40,12 +42,10 @@ export default {
         'getQuestions'
     ]),
     getQuest(){
-      // let q = this.randomQuestions;
       let q = Object.assign([], this.randomQuestions);
 
       if(this.countQuest > 0 
         && this.countQuest < this.randomQuestions.length){
-
         q.length = this.countQuest;
       }
       return q;
@@ -54,29 +54,26 @@ export default {
   methods: {
     setValue(){
       console.log({var: this.index+1, value: this.getQuest});
-      this.$emit('setValue', {var: this.index+1, value: this.getQuest});
+      // this.$emit('setValue', {var: this.index+1, value: this.getQuest});
+      this.$emit('setValue', {value: this.getQuest});
     }
   },
   created(){
     console.log("Create randomQuestions");
-    this.randomQuestions = shuffle(this.getQuestions);
+    this.randomQuestions = !this.isSaved ? shuffle(this.getQuestions) : this.getQuestions;
     this.$parent.$on('getVariant', this.setValue);
   }
 }
 // Privat
-function shuffle(array) {
-  let currentIndex = array.length, temporaryValue, randomIndex;
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
+function shuffle(a) {
+    let j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }
 </script>
 

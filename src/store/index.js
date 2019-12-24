@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import d from '@/../public/d.json';
 console.log(d);
-const axios = require('axios');
 
 Vue.use(Vuex)
 

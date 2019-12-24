@@ -1,20 +1,26 @@
 <template>
   <div class="with-answers">
+    <h3>Бланк ответов</h3>
     <table class="table">
       <thead>
-        {{value}}
           <tr>
-           <th v-for="(val, index) in value" :key="index" scope="col">Var {{val.var}} {{val.value}}</th>
+            <th scope="col">#</th>
+            <th v-for="(value, index) in values" :key="index" scope="col">В{{index + 1}}</th>
           </tr>
-          <tbody>
-            <tr v-for="(val, index) in value" :key="index" >
-              <th scope="row">
-                {{index+1}}
-              </th>
-              <td>{{ val }}</td>
-            </tr>
-          </tbody>
       </thead>
+      <tbody>
+        <tr v-for="(row, index) in values[0]" :key="index">
+          <!-- {{row}} -->
+          <th scope="row">{{index + 1}}</th>
+          <template v-for="(question) in values">
+            <td>
+              <span v-for="(answer, ansIndex) in question[index].answers" :key="ansIndex">
+                <span class="answer" v-if="answer.isCorrect">({{alphabet[ansIndex]}}) <!--{{answer}}--></span>
+              </span>
+            </td>
+          </template>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -26,11 +32,14 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'WithAnswers',
-  props: ['value'],
+  props: {
+    values: Array
+  },
   components: {
   },
   data(){
     return{
+      alphabet: ['A','B','C','D','E','F','G','H','I','J','K','L']
     }
   },
   computed:{
@@ -60,12 +69,21 @@ export default {
     text-align: left;
     padding-top: 60px;
 }
+.answer{
+  font-weight: bold;
+}
 ul,li{
     list-style: none;
 }
-.success{
-  background: #51f957;
+th,tr, td{
+  border-left: 2px solid #333;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  border-width: 2px;
+  border-color: #333 !important;
 }
-
-
+.with-answers{
+  width: 95%;
+  margin: 0 auto;  
+}
  </style>
