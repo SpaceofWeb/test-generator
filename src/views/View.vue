@@ -75,10 +75,10 @@ export default {
       this.isSaved = true;
     },
     setValue(payload){
-      console.log(payload);
+      // console.log(payload);
       let {value} = payload
       this.values.push(value);
-      console.log(this.values);
+      // console.log(this.values);
     }
   },
   created(){

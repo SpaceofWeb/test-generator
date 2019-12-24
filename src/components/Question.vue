@@ -74,7 +74,6 @@ export default {
       this.$emit('deleteAnswer', {index: this.index, ansIndex: ind});
     },
     deleteQuestion(index){
-      console.log(index);
       this.$emit('deleteQuestion', index);
     }
   }

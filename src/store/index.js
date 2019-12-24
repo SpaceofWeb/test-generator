@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import d from '@/../public/d.json';
-console.log(d);
+// console.log(d);
 
 Vue.use(Vuex)
 
@@ -27,7 +27,6 @@ export default new Vuex.Store({
       let {titleTest, questions} = payload;
       state.title = titleTest;
       state.data = questions;
-      console.log('mut');
       try {
         localStorage.setItem(titleTest, JSON.stringify(questions));
       } catch (e) {
@@ -35,22 +34,21 @@ export default new Vuex.Store({
           alert('Превышен лимит');
         }
       }
-      console.log(localStorage.length);
+      // console.log(localStorage.length);
     },
     selectTestMUT(state, payload){
       let {titleTest, questions} = payload;
       state.title = titleTest;
       state.data = questions;
-      console.log('mut');
     }
   },
   actions: {
     saveTestACT(context, payload){
-      console.log(payload);
+      // console.log(payload);
       context.commit('saveTestMUT', payload);
     },
     selectTestACT(context, payload){
-      console.log(payload);
+      // console.log(payload);
       context.commit('selectTestMUT', payload);
     }
   }

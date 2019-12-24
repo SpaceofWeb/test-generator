@@ -55,12 +55,11 @@ export default {
       'selectTestACT'
     ]),
     view(test){
-      console.log(test);
+      // console.log(test);
       this.$store.dispatch('selectTestACT', { titleTest: test.titleTest, questions: test.questions });
       this.$router.push('/view');
     },
     deleteTest(test){
-      console.log("AASDASDSAD");
     }
   },
   created(){
@@ -86,8 +85,5 @@ export default {
 }
 .title-test{
   font-weight: bold;
-}
-.countQuestions{
-  /* margin-right: 40px; */
 }
  </style>

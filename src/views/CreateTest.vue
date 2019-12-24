@@ -63,10 +63,9 @@ export default {
     },
     // Check Box
     inputAnswersCheck(payload){
-      console.log(payload);
       let {value, index, ansIndex} = payload;
       this.questions[index].answers[ansIndex].isCorrect = !value;
-      console.log(`Now ${ this.questions[index].answers[ansIndex].isCorrect = !value}`);
+      // console.log(`Now ${ this.questions[index].answers[ansIndex].isCorrect = !value}`);
     },
       // Field
     inputAnswersField(payload){
@@ -89,7 +88,7 @@ export default {
     },
     // Add Question
     addQuestion(){
-      console.log(this.questions);
+      // console.log(this.questions);
       this.questions.push({
         question: '',
         answers: [{
@@ -100,8 +99,6 @@ export default {
     },
     // Delete Question
     deleteQuestion(ind) {
-      console.log(ind);
-      console.log(this.questions[ind]);
       this.questions.splice(ind, 1);
     },
     // Save

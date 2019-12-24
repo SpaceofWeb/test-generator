@@ -73,7 +73,7 @@ export default {
         this.maxAnswers < questions.answers.length ? this.maxAnswers = questions.answers.length : false;
       });
     });
-    console.log(this.maxAnswers);
+    // console.log(this.maxAnswers);
   }
 }
 </script>

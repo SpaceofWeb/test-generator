@@ -54,13 +54,13 @@ export default {
   },
   methods: {
     setValue(){
-      console.log({var: this.index+1, value: this.getQuest});
+      // console.log({var: this.index+1, value: this.getQuest});
       // this.$emit('setValue', {var: this.index+1, value: this.getQuest});
       this.$emit('setValue', {value: this.getQuest});
     }
   },
   created(){
-    console.log("Create randomQuestions");
+    // console.log("Create randomQuestions");
     this.randomQuestions = !this.isSaved ? shuffle(this.getQuestions) : this.getQuestions;
     this.$parent.$on('getVariant', this.setValue);
   }
