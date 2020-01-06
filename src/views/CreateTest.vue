@@ -58,10 +58,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      'saveTestACT'
+      'saveTestACT',
+      'downloadTestACT'
     ]),
     inputQuestion(payload){
-      console.log(payload);
+      // console.log(payload);
       this.questions[payload.index].question = payload.value;
     },
     // Check Box
@@ -106,7 +107,10 @@ export default {
     },
     // Save
     saveTest(){
+      // console.log(this.titleTest);
+      // console.log(this.questions);
       this.$store.dispatch('saveTestACT', { titleTest: this.titleTest, questions: this.questions });
+      this.$store.dispatch('downloadTestACT', { titleTest: this.titleTest, questions: this.questions });
       this.$router.push('/view');
     },
     ...mapMutations([

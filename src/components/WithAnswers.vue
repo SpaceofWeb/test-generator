@@ -1,6 +1,7 @@
 <template>
   <div class="with-answers">
-    <h3>Бланк ответов</h3>
+    <h3>Бланк ответов для теста</h3>
+    <h4>{{getTestsTitle}}</h4>
     <table class="table">
       <thead>
           <tr>

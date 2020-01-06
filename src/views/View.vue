@@ -2,7 +2,7 @@
   <div class="view">
     <Print v-if="isSaved" class="print"/>
     <div class="btn-group">
-        <b-button-group> 
+        <b-button-group v-if="isSaved"> 
         <b-button @click="changeState('test')">Тестовое задание</b-button>
         <b-button @click="changeState('withanswer')">Ответы</b-button>
         <b-button @click="changeState('answer')">Бланк для ответов</b-button>

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import d from '@/../public/d.json';
+// import d from '@/../public/d.json';
+let JSZip = require("jszip");
+let saveAs = require ("file-saver").saveAs;
 // console.log(d);
 
 Vue.use(Vuex)
@@ -8,8 +10,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tests: [],
-    title: d.shift().testTitle,
-    data: d,
+    title: '',
+    data: '',
     editTest: [] 
   },
   getters:{
@@ -41,6 +43,7 @@ export default new Vuex.Store({
       // console.log(localStorage.length);
     },
     selectTestMUT(state, payload){
+      // console.log(payload);
       let {titleTest, questions} = payload;
       state.title = titleTest;
       state.data = questions;
@@ -64,6 +67,17 @@ export default new Vuex.Store({
     editTestACT(context, payload){
       // console.log(payload);
       context.commit('editTestMUT', payload);
+    },
+    downloadTestACT(context, payload){
+      let {titleTest, questions} = payload;
+      let zip = new JSZip();
+      let fileData = {titleTest: titleTest, questions: questions};
+      // console.log(fileData);
+      zip.file('test.json', JSON.stringify(fileData));
+      zip.generateAsync({type:"blob"})
+      .then(function (blob) {
+        saveAs(blob, "Test.zip");
+      });
     }
   }
 })

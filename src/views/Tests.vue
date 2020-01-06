@@ -3,8 +3,13 @@
     <div class="tests-title">
         <h2>Ваши тесты</h2>
         <p>Выберите нужный или создайте новый</p>
-    </div>       
-      <b-container>
+    </div>
+    <b-container>
+    <!-- Load -->
+     <!-- <b-form-file  ref="myFile"  @change="onFileChange" class="mt-3"></b-form-file> -->
+     <input type="file" id="file" @change="onFileChange" />
+     <label for="file" class="load-symbol">&#128228;</label>
+    <!-- / Load -->
     <b-list-group v-if="lenTest">
       <!-- li -->
         <b-list-group-item 
@@ -41,7 +46,9 @@ export default {
   },
   data(){
       return{
-        tests: []
+        tests: [],
+        text: '',
+        someData: ''
       }
   },
   computed:{
@@ -59,7 +66,8 @@ export default {
   methods: {
     ...mapActions([
       'selectTestACT',
-      'editTestACT'
+      'editTestACT',
+      'saveTestACT'
     ]),
     view(test){
       // console.log(test);
@@ -86,6 +94,19 @@ export default {
           questions: JSON.parse(localStorage.getItem(keys[key]))
         });
       }
+    },
+    onFileChange(ev){
+      // console.log('selected a file');
+      const file = ev.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        let {titleTest, questions} = JSON.parse(e.target.result);
+        // console.log(JSON.parse(e.target.result));
+        this.$store.dispatch('saveTestACT', JSON.parse(e.target.result));
+        this.getLocalStorage();
+      }
+      reader.readAsText(file);
     }
   },
   created(){
@@ -123,4 +144,25 @@ export default {
 .btn-group{
   margin-right: 1.25rem;
 }
+.container{
+  text-align: right;
+}
+.load-symbol{
+  display: inline-block;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all .3s;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.load-symbol:hover{
+  transform: translateY(-5px);
+}
+/*  */
+[type="file"] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
  </style>
